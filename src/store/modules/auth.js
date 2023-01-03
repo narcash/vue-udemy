@@ -6,7 +6,15 @@ const mutations = {
         state.isSubmitting = true
     }
 }
+const actions ={ 
+    register(context){
+        setTimeout(() => {
+            context.commit('registerStart')
+        },1000)
+    }
+}
 export default {
     state,
-    mutations
+    mutations,
+    actions
 }
