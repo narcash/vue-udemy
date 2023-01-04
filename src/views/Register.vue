@@ -9,10 +9,14 @@
               Need an account?
             </router-link>
           </p>
-          VALIDATION ERRORS
+          <mcv-validation-errors
+            v-if="validationErrors"
+            :validation-errors="validationErrors"
+          ></mcv-validation-errors>
           <form @submit.prevent="onSubmit">
             <fieldset class="form-group">
               <input
+                v-model="username"
                 class="form-control form-control-lg"
                 type="text"
                 placeholder="Username"
@@ -20,6 +24,7 @@
             </fieldset>
             <fieldset class="form-group">
               <input
+                v-model="email"
                 class="form-control form-control-lg"
                 type="text"
                 placeholder="Email"
@@ -27,6 +32,7 @@
             </fieldset>
             <fieldset class="form-group">
               <input
+                v-model="password"
                 class="form-control form-control-lg"
                 type="password"
                 placeholder="Password"
@@ -46,18 +52,46 @@
 </template>
 
 <script>
+import McvValidationErrors from "@/components/ValidationErrors";
+import { actionTypes } from "@/store/modules/auth";
+
 export default {
   name: "McvRegister",
+  components: {
+    McvValidationErrors,
+  },
+  data() {
+    return {
+      email: "",
+      password: "",
+      username: "",
+    };
+  },
   computed: {
     isSubmitting() {
       return this.$store.state.auth.isSubmitting;
     },
+    validationErrors() {
+      return this.$store.state.auth.validationErrors;
+    },
   },
   methods: {
     onSubmit() {
-      console.log("submitted form");
-      this.$store.dispatch("register");
+      console.log("onSubmit");
+      this.$store
+        .dispatch(actionTypes.register, {
+          email: this.email,
+          username: this.username,
+          password: this.password,
+        })
+        .then(() => {
+          this.$router.push({ name: "home" });
+        });
     },
+    /* increaseCounter() { */
+    /*   console.log('increaseCounter') */
+    /*   this.$store.commit('increment') */
+    /* } */
   },
 };
 </script>
