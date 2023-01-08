@@ -8,21 +8,21 @@
 
 <script>
 export default {
-  name: "McvValidationErrors",
+  name: 'McvValidationErrors',
   props: {
     validationErrors: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     errorMessages() {
-      return Object.keys(this.validationErrors).map((name) => {
-        const messages = this.validationErrors[name].join(", ");
+      return Object.keys(this.validationErrors).map(name => {
+        const messages = this.validationErrors[name].join(', ')
 
-        return `${name} ${messages}`;
-      });
-    },
-  },
-};
+        return `${name} ${messages}`
+      })
+    }
+  }
+}
 </script>
